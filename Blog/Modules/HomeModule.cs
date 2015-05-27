@@ -10,16 +10,12 @@ namespace Blog.Modules
     {
         public HomeModule(IBlog blog)
         {
-            Get["/"] = p =>
+            Get["/"] = p => View["index"].WithModel(new
             {
-                var author = blog.GetOwner();
-
-                return View["index"].WithModel(new
-                {
-                    Author = author,
-                    Articles = blog.GetArticlesByAuthorId(author.Id)
-                });
-            };
+                Author = blog.Author,
+                Articles = blog.Articles,
+                Times = BlogEngine.C
+            });
         }
     }
 }

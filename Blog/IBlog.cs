@@ -8,26 +8,30 @@ namespace Blog
 {
     public interface IBlog
     {
-        Author GetAuthor(string username, string password);
+        Author Login(string username, string password);
 
-        Author GetOwner();
+        Author Author { get; }
 
-        IEnumerable<Article> GetArticles();
+        IEnumerable<Article> Articles
+        {
+            get;
+        }
 
-        IEnumerable<Article> GetArticlesById(int articleId);
+        //IEnumerable<Article> GetArticlesByLink(string link);
 
-        IEnumerable<Article> GetArticlesByAuthorId(int authorId);
+        //IEnumerable<Article> GetArticlesByAuthorId(int authorId);
 
-        IEnumerable<Article> GetArticlesByLastUpdateDate(DateTime date);
+        //IEnumerable<Article> GetArticlesByLastUpdateDate(DateTime date);
 
-        IEnumerable<Article> GetArticlesByTag(string tag);
+        //IEnumerable<Article> GetArticlesByTag(string tag);
 
-        IEnumerable<Article> GetArticlesByCategory(string category);
+        //IEnumerable<Article> GetArticlesByCategory(string category);
     }
 
     /// <summary>
     /// 作者
     /// </summary>
+    [Serializable]
     public class Author
     {
         public int Id { get; set; }
