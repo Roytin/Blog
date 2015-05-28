@@ -7,6 +7,7 @@ using System.Web;
 using MySql.Data.MySqlClient;
 using Nancy;
 using Nancy.Bootstrapper;
+using Nancy.Cryptography;
 using Nancy.Session;
 using Nancy.TinyIoc;
 

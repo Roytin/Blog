@@ -39,11 +39,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Dapper">
+    <Reference Include="Dapper, Version=1.40.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Dapper.1.42\lib\net40\Dapper.dll</HintPath>
-    </Reference>
-    <Reference Include="DapperExtensions">
-      <HintPath>..\packages\DapperExtensions.1.4.4\lib\net40\DapperExtensions.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="MySql.Data">
@@ -84,7 +82,13 @@
     <Content Include="packages.config" />
     <None Include="Properties\PublishProfiles\blog.pubxml" />
     <Content Include="Views\index.cshtml" />
-    <Content Include="Views\console.cshtml" />
+    <Content Include="Views\admin\admin.cshtml" />
+    <Content Include="Views\detail.cshtml" />
+    <Content Include="Views\archive.cshtml" />
+    <Content Include="Views\category.cshtml" />
+    <Content Include="Views\admin\login.cshtml" />
+    <Content Include="Views\admin\edit.cshtml" />
+    <Content Include="Views\system\error.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -98,6 +102,8 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Article.cs" />
+    <Compile Include="Author.cs" />
     <Compile Include="BlogEngine.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="IBlog.cs" />

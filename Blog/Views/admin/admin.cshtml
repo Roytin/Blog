@@ -1,0 +1,31 @@
+﻿@using Blog
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <div>
+        控制台
+    </div>
+
+    <table>
+        @foreach (Article article in Model.Articles)
+        {
+            <tr>
+                <td><a href="/admin/edit/@article.Link">@article.Title</a></td>
+                <td>@article.CreateTime</td>
+                <td>@article.LastUpdateTime</td>
+                <td>@article.Link</td>
+            </tr>
+        }
+    </table>
+    <a href="/admin/edit/new">新建文章</a>
+</body>
+</html>

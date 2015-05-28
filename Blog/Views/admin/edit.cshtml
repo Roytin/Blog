@@ -1,0 +1,33 @@
+﻿@using Blog
+@{
+    Layout = null;
+    Article article = new Article();
+    if (Model.Action != "add")
+    {
+        article = Model.Article;
+    }
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <div>
+        编辑页
+        <form method="POST">
+            <input name="Title" type="text" value="@article.Title"/>
+            <input name="Content" type="text" value="@article.Content" />
+            <input name="Link" type="text" value="@article.Link" />
+            <input name="Description" type="text" value="@article.Description" />
+            <input name="Category" type="text" value="@article.Category" />
+            <input name="Tags" type="text" value="@article.Tags"/>
+
+            <input type="submit" value="提交"/>
+        </form>
+    </div>
+</body>
+</html>

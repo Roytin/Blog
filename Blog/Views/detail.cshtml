@@ -1,0 +1,22 @@
+﻿@using Blog
+@{
+    Layout = null;
+    Author author = Model.Author;
+    Article article = Model.Article;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+<div>
+    <h2>@article.Title</h2>
+    <h3>@article.CreateTime</h3>
+    <p>@article.Content</p>
+</div>
+</body>
+</html>

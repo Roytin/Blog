@@ -19,10 +19,9 @@
     
     @foreach (Article article in @Model.Articles)
     {
-        <h4>@article.Title</h4>
+        <a href="/detail/@article.Link"><h4>@article.Title</h4></a>
         <div>@article.Content</div>
-        <div>所属分类：@article.Tags</div>   
-               
+        <div>所属分类：@article.Tags</div>
     }
     @Model.Times
 </body>
