@@ -19,7 +19,10 @@ namespace Blog
             _dbConnection = dbConnection;
             Interlocked.Increment(ref C);
         }
-        
+
+        public string Name { get { return "Castle Infinite"; } }
+        public string Description { get { return "那一片在我梦里的干净天空"; } }
+
         public Author Login(string username, string password)
         {
             lock (_syncLock)
@@ -111,7 +114,7 @@ namespace Blog
             temporary.LastUpdateTime = DateTime.Now;
             temporary.AuthorId = Author.Id;
             _dbConnection.Open();
-            int n = _dbConnection.Execute("UPDATE `Article` SET `Title`=@Title,`Content`=@Content,`Description`=@Description," +
+            int n = _dbConnection.Execute("UPDATE `Article` SET `Title`=@Title,`Content`=@Content,`Description`=@Description,Link=@Link," +
                                   "`Category`=@Category," +
                                   "`Tags`=@Tags,`LastUpdateTime`=@LastUpdateTime WHERE `Id`=@Id;", temporary);
             if (n > 0)
@@ -123,76 +126,14 @@ namespace Blog
             _dbConnection.Close();
         }
 
-        //public IEnumerable<Article> GetArticlesByLink(string link)
-        //{
-        //    lock (_syncLock)
-        //    {
-        //        _dbConnection.Open();
-        //        var articles = _dbConnection.Query<Article>("select * from Article where Link=@Link",new
-        //        {
-        //            Link = link
-        //        });
-        //        _dbConnection.Close();
-        //        return articles;
-        //    }
-        //}
+        public IEnumerable<Info> GetCategory()
+        {
+            return _articles.GroupBy(a => a.Category).Select(g => new Info() {Key = g.Key, Count = g.Count()});
+        }
 
-        //public IEnumerable<Article> GetArticlesByAuthorId(int authorId)
-        //{
-        //    lock (_syncLock)
-        //    {
-        //        _dbConnection.Open();
-        //        var articles = _dbConnection.Query<Article>("select * from Article where AuthorId=@AuthorId", new
-        //        {
-        //            AuthorId = authorId
-        //        });
-        //        _dbConnection.Close();
-        //        return articles;
-        //    }
-        //}
-
-        //public IEnumerable<Article> GetArticlesByLastUpdateDate(DateTime date)
-        //{
-        //    lock (_syncLock)
-        //    {
-        //        _dbConnection.Open();
-        //        var articles = _dbConnection.Query<Article>("select * from Article where date(LastUpdateTime)=@Date",
-        //            new
-        //            {
-        //                Date=date.ToString("yyyy-MM-dd")
-        //            });
-        //        _dbConnection.Close();
-        //        return articles;
-        //    }
-        //}
-
-        //public IEnumerable<Article> GetArticlesByTag(string tag)
-        //{
-        //    lock (_syncLock)
-        //    {
-        //        _dbConnection.Open();
-        //        var articles = _dbConnection.Query<Article>("select * from Article where Find_In_Set(@Tag, Tags)",
-        //            new 
-        //            {
-        //                Tag = tag
-        //            });
-        //        _dbConnection.Close();
-        //        return articles;
-        //    }
-        //}
-
-        //public IEnumerable<Article> GetArticlesByCategory(string category)
-        //{
-        //    lock (_syncLock)
-        //    {
-        //        _dbConnection.Open();
-        //        var articles = _dbConnection.Query<Article>("select * from Article where Category=@Category", new
-        //        {
-        //            Category = category
-        //        });
-        //        _dbConnection.Close();
-        //        return articles;
-        //    }
-        //}
+        public IEnumerable<Info> GetArchive()
+        {
+            return _articles.GroupBy(a => a.CreateTime.ToString("yyyy-MM-dd")).Select(g => new Info() { Key = g.Key, Count = g.Count() });
+        }
     }
 }

@@ -43,6 +43,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Dapper.1.42\lib\net40\Dapper.dll</HintPath>
     </Reference>
+    <Reference Include="MarkdownSharp">
+      <HintPath>..\packages\MarkdownSharp.1.13.0.0\lib\35\MarkdownSharp.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="MySql.Data">
       <HintPath>..\packages\MySql.Data.6.9.6\lib\net40\MySql.Data.dll</HintPath>
@@ -79,6 +82,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="css\blog.css" />
     <Content Include="packages.config" />
     <None Include="Properties\PublishProfiles\blog.pubxml" />
     <Content Include="Views\index.cshtml" />
@@ -89,6 +93,8 @@
     <Content Include="Views\admin\login.cshtml" />
     <Content Include="Views\admin\edit.cshtml" />
     <Content Include="Views\system\error.cshtml" />
+    <Content Include="Views\_LayoutHome.cshtml" />
+    <Content Include="Views\admin\_LayoutAdmin.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -107,6 +113,7 @@
     <Compile Include="BlogEngine.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="IBlog.cs" />
+    <Compile Include="Info.cs" />
     <Compile Include="Modules\AdminModule.cs" />
     <Compile Include="Modules\HomeModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

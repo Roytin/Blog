@@ -7,6 +7,7 @@ using System.Web;
 using MySql.Data.MySqlClient;
 using Nancy;
 using Nancy.Bootstrapper;
+using Nancy.Conventions;
 using Nancy.Cryptography;
 using Nancy.Session;
 using Nancy.TinyIoc;
@@ -25,6 +26,14 @@ namespace Blog
         {
             base.ApplicationStartup(container, pipelines);
             CookieBasedSessions.Enable(pipelines);
+
+        }
+
+        protected override void ConfigureConventions(NancyConventions nancyConventions)
+        {
+            base.ConfigureConventions(nancyConventions);
+            nancyConventions.StaticContentsConventions.Add(StaticContentConventionBuilder.AddDirectory("css"));
+            nancyConventions.StaticContentsConventions.Add(StaticContentConventionBuilder.AddDirectory("API"));
         }
     }
 }

@@ -26,9 +26,16 @@ namespace Blog.Modules
                 });
             };
 
-            Get["/login/{UserName}/{Password}"] = p =>
+            Post["/login"] = p =>
             {
-                Author author = blog.Login(p.UserName, p.Password);
+                string username = Request.Form["UserName"];
+                string password = Request.Form["Password"];
+                if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+                {
+                    return View["login"];
+                }
+
+                Author author = blog.Login(username, password);
                 if (author == null)
                 {
                     //username or password wrong
@@ -51,6 +58,7 @@ namespace Blog.Modules
                     //添加新
                     return View["edit"].WithModel(new
                     {
+                        Title = blog.Name,
                         Action = "add"
                     });
                 }

@@ -1,28 +1,34 @@
 ﻿@using System
 @using Blog
 @{
-    Layout = null;
+    Layout = "_LayoutHome.cshtml";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title></title>
-</head>
-<body>
-    <div>
-        @DateTime.Now
+@section blogHeader{
+    <div class="jumbotron">
+        <h1>@Model.Title</h1>
+        <p class="lead">@Model.Description</p>
     </div>
-    博主是：@Model.Author.NickName
-    
+}
+<div class="row">
     @foreach (Article article in @Model.Articles)
     {
-        <a href="/detail/@article.Link"><h4>@article.Title</h4></a>
-        <div>@article.Content</div>
-        <div>所属分类：@article.Tags</div>
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <a class="text-muted" href="/detail/@article.Link"><h3>@article.Title</h3></a>
+                    <div>
+                        <small class="pull-right">发布于 - @article.CreateTime</small>
+                        <h5>
+                            <span class="label label-default">
+                                @article.Category
+                            </span>
+                        </h5>
+                    </div>
+                    <div class="text-justify">@Html.Raw(article.Description)</div>
+
+                </div>
+            </div>
+        </div>
     }
-    @Model.Times
-</body>
-</html>
+</div>
