@@ -32,7 +32,7 @@ namespace Blog
 
         public int CompareTo(Article other)
         {
-            return this.CreateTime.CompareTo(other.CreateTime);
+            return other.CreateTime.CompareTo(CreateTime);
         }
     }
 }

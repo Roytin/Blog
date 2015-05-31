@@ -8,6 +8,12 @@
     }
 }
 
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+
+<!-- include summernote css/js-->
+<link href="/css/summernote.css" rel="stylesheet" />
+<script src="/js/summernote.js"></script>
+
 <div class="row">
     <form method="POST" class="form-horizontal">
         <input name="Id" type="hidden" value="@article.Id" />
@@ -56,5 +62,16 @@
         <div class="form-group">
             <input type="submit" class="btn btn-lg btn-primary" style="float: right;margin: 12px" value="提交" />
         </div>
+        
     </form>
 </div>
+<script>
+    $(document).ready(function() {
+        $('#Content').summernote({
+            height: 500,
+            minHeight: 300,
+            maxHeight: 600,
+        });
+    });
+</script>
+

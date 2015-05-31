@@ -33,6 +33,8 @@ namespace Blog
         {
             base.ConfigureConventions(nancyConventions);
             nancyConventions.StaticContentsConventions.Add(StaticContentConventionBuilder.AddDirectory("css"));
+            nancyConventions.StaticContentsConventions.Add(StaticContentConventionBuilder.AddDirectory("js"));
+            nancyConventions.StaticContentsConventions.Add(StaticContentConventionBuilder.AddDirectory("img"));
             nancyConventions.StaticContentsConventions.Add(StaticContentConventionBuilder.AddDirectory("API"));
         }
     }

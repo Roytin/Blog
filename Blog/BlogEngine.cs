@@ -45,9 +45,12 @@ namespace Blog
             {
                 if (_author == null)
                 {
-                    _dbConnection.Open();
-                    _author = _dbConnection.Query<Author>("select * from Author limit 1;").FirstOrDefault();
-                    _dbConnection.Close();
+                    lock (_syncLock)
+                    {
+                        _dbConnection.Open();
+                        _author = _dbConnection.Query<Author>("select * from Author limit 1;").FirstOrDefault();
+                        _dbConnection.Close();
+                    }
                 }
                 return _author;
             }
@@ -62,9 +65,13 @@ namespace Blog
             {
                 if (_articles == null)
                 {
-                    _dbConnection.Open();
-                    _articles = _dbConnection.Query<Article>("select * from Article;").AsList();
-                    _dbConnection.Close();
+                    lock (_syncLock)
+                    {
+                        _dbConnection.Open();
+                        _articles = _dbConnection.Query<Article>("select * from Article;").AsList();
+                        _dbConnection.Close();
+                        _articles.Sort();
+                    }
                 }
                 return _articles;
             }
@@ -80,17 +87,23 @@ namespace Blog
             article.LastUpdateTime = DateTime.Now;
             article.AuthorId = _author.Id;
 
-            _dbConnection.Open();
-            int n = _dbConnection.Execute("INSERT INTO Article(Title,Link,Content,Description,Category,Tags,CreateTime,LastUpdateTime,AuthorId) " +
-                                           "Values(@Title,@Link,@Content,@Description,@Category,@Tags,@CreateTime,@LastUpdateTime,@AuthorId);", article);
-            if (n > 0)
+            lock (_syncLock)
             {
-                int id = _dbConnection.Query<int>("select Id from Article where Link = @Link", article).Single();
-                article.Id = id;
-                _articles.Add(article);
+                _dbConnection.Open();
+                int n =
+                    _dbConnection.Execute(
+                        "INSERT INTO Article(Title,Link,Content,Description,Category,Tags,CreateTime,LastUpdateTime,AuthorId) " +
+                        "Values(@Title,@Link,@Content,@Description,@Category,@Tags,@CreateTime,@LastUpdateTime,@AuthorId);",
+                        article);
+                if (n > 0)
+                {
+                    int id = _dbConnection.Query<int>("select Id from Article where Link = @Link", article).Single();
+                    article.Id = id;
+                    _articles.Add(article);
+                }
+                _dbConnection.Close();
+                _articles.Sort();
             }
-            _dbConnection.Close();
-
         }
 
         public bool RemoveArticle(string link)
@@ -99,9 +112,15 @@ namespace Blog
             if (article == null) 
                 return false;
 
-            _dbConnection.Open();
-            _dbConnection.Execute("DELETE FROM Article WHERE Link=@Link;", article);
-            _dbConnection.Close();
+            lock (_syncLock)
+            {
+                _dbConnection.Open();
+                if (_dbConnection.Execute("DELETE FROM Article WHERE Link=@Link;", article) > 0)
+                {
+                    _articles.Remove(article);
+                }
+                _dbConnection.Close();
+            }
             return true;
         }
 
@@ -113,17 +132,21 @@ namespace Blog
             temporary.CreateTime = article.CreateTime;
             temporary.LastUpdateTime = DateTime.Now;
             temporary.AuthorId = Author.Id;
-            _dbConnection.Open();
-            int n = _dbConnection.Execute("UPDATE `Article` SET `Title`=@Title,`Content`=@Content,`Description`=@Description,Link=@Link," +
-                                  "`Category`=@Category," +
-                                  "`Tags`=@Tags,`LastUpdateTime`=@LastUpdateTime WHERE `Id`=@Id;", temporary);
-            if (n > 0)
+            lock (_syncLock)
             {
-                _articles.Remove(article);
-                _articles.Add(temporary);
-                _articles.Sort();
+                _dbConnection.Open();
+                int n =
+                    _dbConnection.Execute(
+                        "UPDATE `Article` SET `Title`=@Title,`Content`=@Content,`Description`=@Description,Link=@Link," +
+                        "`Category`=@Category," +
+                        "`Tags`=@Tags,`LastUpdateTime`=@LastUpdateTime WHERE `Id`=@Id;", temporary);
+                if (n > 0)
+                {
+                    _articles.Remove(article);
+                    _articles.Add(temporary);
+                }
+                _dbConnection.Close();
             }
-            _dbConnection.Close();
         }
 
         public IEnumerable<Info> GetCategory()

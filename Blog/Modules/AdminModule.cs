@@ -97,6 +97,22 @@ namespace Blog.Modules
 
                 return Response.AsRedirect("/admin/");
             };
+
+            Get["/del/{Link}"] = p =>
+            {
+                if (CheckLogin(blog) == null)
+                    return View["login"];
+                var article = blog.Articles.FirstOrDefault(a => a.Link == p.Link);
+                if (article == null)
+                {
+                    return View["error"];
+                }
+                else
+                {
+                    blog.RemoveArticle(article.Link);
+                    return Response.AsRedirect("/admin/");
+                }
+            };
         }
 
         private Author CheckLogin(IBlog blog)

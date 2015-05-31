@@ -3,20 +3,34 @@
     Layout = "_LayoutAdmin.cshtml";
 }
 
-    <div>
-        控制台
+<div class="row">
+    <div class="table-responsive">
+        <table class="table table-bordered table-condensed">
+            <caption>控制台</caption>
+            <tr>
+                <th>操作</th>
+                <th>标题</th>
+                <th>创建时间</th>
+                <th>最后修改时间</th>
+                <th>Link</th>
+            </tr>
+            <tbody>
+                @foreach (Article article in Model.Articles)
+                {
+                    <tr>
+                        <td>
+                            <a class="btn btn-xs btn-primary" href="/admin/edit/@article.Link">编辑</a>
+                            <a class="btn btn-xs btn-danger" href="/admin/del/@article.Link">删除</a>
+                        </td>
+                        <td>@article.Title</td>
+                        <td>@article.CreateTime</td>
+                        <td>@article.LastUpdateTime</td>
+                        <td>@article.Link</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
 
-    <table>
-        @foreach (Article article in Model.Articles)
-        {
-            <tr>
-                <td><a href="/admin/edit/@article.Link">@article.Title</a></td>
-                <td>@article.CreateTime</td>
-                <td>@article.LastUpdateTime</td>
-                <td>@article.Link</td>
-            </tr>
-        }
-    </table>
-    <a href="/admin/edit/new">新建文章</a>
-
+    <a class="btn btn-sm btn-primary" href="/admin/edit/new">新建文章</a>
+</div>

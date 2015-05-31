@@ -26,7 +26,7 @@ namespace Blog.Modules
                 var article = blog.Articles.FirstOrDefault(a => a.Link == p.Link);
                 if (article == null)
                 {
-                    return Response.AsRedirect("error");
+                    return Response.AsRedirect("/error");
                 }
                 Markdown mk = new Markdown();
 
@@ -58,6 +58,8 @@ namespace Blog.Modules
                 Categories = blog.GetCategory(),
                 Archives = blog.GetArchive(),
             });
+
+            Get["/error"] = p => View["error"];
         }
     }
 }

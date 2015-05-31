@@ -83,8 +83,25 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="css\blog.css" />
+    <Content Include="css\bootstrap-theme.css" />
+    <Content Include="css\bootstrap-theme.min.css" />
+    <Content Include="css\bootstrap.css" />
+    <Content Include="css\bootstrap.min.css" />
+    <Content Include="css\summernote.css" />
+    <Content Include="favicon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\brand.png" />
+    <Content Include="js\summernote.js" />
+    <Content Include="js\summernote.min.js" />
+    <Content Include="js\bootstrap.js" />
+    <Content Include="js\bootstrap.min.js" />
+    <Content Include="js\npm.js" />
     <Content Include="packages.config" />
+    <Content Include="css\bootstrap-theme.css.map" />
+    <Content Include="css\bootstrap.css.map" />
     <None Include="Properties\PublishProfiles\blog.pubxml" />
+    <Content Include="img\photo.jpg" />
     <Content Include="Views\index.cshtml" />
     <Content Include="Views\admin\admin.cshtml" />
     <Content Include="Views\detail.cshtml" />
@@ -95,6 +112,10 @@
     <Content Include="Views\system\error.cshtml" />
     <Content Include="Views\_LayoutHome.cshtml" />
     <Content Include="Views\admin\_LayoutAdmin.cshtml" />
+    <Content Include="Resources\error.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="Properties\PublishProfiles\ftp-blog.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -112,12 +133,25 @@
     <Compile Include="Author.cs" />
     <Compile Include="BlogEngine.cs" />
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="BlogErrorHandler.cs" />
     <Compile Include="IBlog.cs" />
     <Compile Include="Info.cs" />
     <Compile Include="Modules\AdminModule.cs" />
     <Compile Include="Modules\HomeModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
