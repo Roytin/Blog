@@ -70,7 +70,7 @@ namespace Blog
                         _dbConnection.Open();
                         _articles = _dbConnection.Query<Article>("select * from Article;").AsList();
                         _dbConnection.Close();
-                        _articles.Sort();
+                        Refresh();
                     }
                 }
                 return _articles;
@@ -100,9 +100,9 @@ namespace Blog
                     int id = _dbConnection.Query<int>("select Id from Article where Link = @Link", article).Single();
                     article.Id = id;
                     _articles.Add(article);
+                    Refresh();
                 }
                 _dbConnection.Close();
-                _articles.Sort();
             }
         }
 
@@ -118,6 +118,7 @@ namespace Blog
                 if (_dbConnection.Execute("DELETE FROM Article WHERE Link=@Link;", article) > 0)
                 {
                     _articles.Remove(article);
+                    Refresh();
                 }
                 _dbConnection.Close();
             }
@@ -144,20 +145,30 @@ namespace Blog
                 {
                     _articles.Remove(article);
                     _articles.Add(temporary);
-                    _articles.Sort();
+                    Refresh();
                 }
                 _dbConnection.Close();
             }
         }
 
+        private List<Info> _bufferInfoCategory;
+        private List<Info> _bufferArchive;
+
+        private void Refresh()
+        {
+            _articles.Sort();
+            _bufferInfoCategory = _articles.GroupBy(a => a.Category).Select(g => new Info() { Key = g.Key, Count = g.Count() }).ToList();
+            _bufferArchive = _articles.GroupBy(a => a.CreateTime.ToString("yyyy-MM")).Select(g => new Info() { Key = g.Key, Count = g.Count() }).ToList();
+        }
+
         public IEnumerable<Info> GetCategory()
         {
-            return _articles.GroupBy(a => a.Category).Select(g => new Info() {Key = g.Key, Count = g.Count()});
+            return _bufferInfoCategory;
         }
 
         public IEnumerable<Info> GetArchive()
         {
-            return _articles.GroupBy(a => a.CreateTime.ToString("yyyy-MM-dd")).Select(g => new Info() { Key = g.Key, Count = g.Count() });
+            return _bufferArchive;
         }
     }
 }

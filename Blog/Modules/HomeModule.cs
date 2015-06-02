@@ -38,14 +38,21 @@ namespace Blog.Modules
                 });
             };
 
-            Get["/archive/{Date}"] = p => View["archive"].WithModel(new
-            {
-                Author = blog.Author,
-                Articles = blog.Articles.Where(a => a.CreateTime.Date == DateTime.Parse(p.Date)),
-                Title = "档案" + p.Date +" - " + blog.Name,
-                Categories = blog.GetCategory(),
-                Archives = blog.GetArchive(),
-            });
+            Get["/archive/{Date}"] = p => {
+                DateTime date = DateTime.Parse(p.Date);
+                return View["archive"].WithModel(new
+                {
+                    Author = blog.Author,
+                    Articles =
+                        blog.Articles.Where(
+                            a =>
+                                a.CreateTime.Year == date.Year &&
+                                a.CreateTime.Month == date.Month),
+                    Title = "档案" + p.Date + " - " + blog.Name,
+                    Categories = blog.GetCategory(),
+                    Archives = blog.GetArchive(),
+                });
+            };
 
             Get["/category/{Category}"] = p => View["category"].WithModel(new
             {
