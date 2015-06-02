@@ -144,6 +144,7 @@ namespace Blog
                 {
                     _articles.Remove(article);
                     _articles.Add(temporary);
+                    _articles.Sort();
                 }
                 _dbConnection.Close();
             }

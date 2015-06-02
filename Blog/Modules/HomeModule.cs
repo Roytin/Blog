@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using MarkdownSharp;
 using Nancy;
 
 namespace Blog.Modules
@@ -28,14 +27,12 @@ namespace Blog.Modules
                 {
                     return Response.AsRedirect("/error");
                 }
-                Markdown mk = new Markdown();
-
                 return View["detail"].WithModel(new
                 {
                     Author = blog.Author,
                     Article = article,
                     Title = article.Title + " - " + blog.Author.NickName + " - " + blog.Name,
-                    Content = mk.Transform(article.Content),
+                    Content = article.Content,
                     Categories = blog.GetCategory(),
                     Archives = blog.GetArchive(),
                 });
