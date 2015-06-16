@@ -13,21 +13,23 @@
 <div class="row">
     @foreach (Article article in @Model.Articles)
     {
-        <div class="col-sm-4">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <a class="text-muted" href="/detail/@article.Link"><strong>@article.Title</strong></a>
-                    <div>
-                        <small class="pull-right"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>@article.CreateTime</small>
-                        <h5>
-                            <span class="label label-default">
-                                @article.Category
-                            </span>
-                        </h5>
-                    </div>
-                    <div class="text-justify">@Html.Raw(article.Description)</div>
-
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <a href="/detail/@article.Link">
+                       @article.Title
+                    </a>
                 </div>
+            </div>
+            <div class="panel-body">
+                <small class="pull-left"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>@article.CreateTime</small>
+                <br />
+                <div class="text-justify">@Html.Raw(article.Description)</div>
+                <h5>
+                    <span class="label label-default">
+                        @article.Category
+                    </span>
+                </h5>
             </div>
         </div>
     }

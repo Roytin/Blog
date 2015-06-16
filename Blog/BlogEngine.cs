@@ -20,8 +20,16 @@ namespace Blog
             Interlocked.Increment(ref C);
         }
 
-        public string Name { get { return "Castle Infinite"; } }
-        public string Description { get { return "那一片在我梦里的干净天空"; } }
+        public string Name { get { return "Castle Babel"; } }
+        public string Description { get { return @"那时，天下人的口音、言语，都是一样。 
+他们往东边迁移的时候，在示拿地遇见一片平原，就住在那里。 
+他们彼此商量说：“来吧！我们要作砖，把砖烧透了。”他们就拿砖当石头，又拿石漆当灰泥。 
+他们说：“来吧！我们要建造一座城和一座塔，塔顶通天，为要传扬我们的名，免得我们分散在全地上。” 
+耶和华降临，要看看世人所建造的城和塔。 
+耶和华说：“看哪！他们成为一样的人民，都是一样的言语，如今既作起这事来，以后他们所要作的事，就没有不成就的了。 
+我们下去，在那里变乱他们的口音，使他们的言语彼此不通。” 
+于是，耶和华使他们从那里分散在全地上；他们就停工不造那城了。 
+因为耶和华在那里变乱天下人的言语，使众人分散在全地上，所以那城名叫巴别(就是“变乱”的意思)。 "; } }
 
         public Author Login(string username, string password)
         {
